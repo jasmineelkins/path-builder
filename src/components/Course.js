@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-function Course({ course }) {
+function Course({ item }) {
   return (
     <div className="courseContainer">
-      <span>{course}</span>
+      <span>{item.name}</span>
+      <button className="btn">x</button>
     </div>
   );
 }

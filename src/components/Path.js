@@ -1,42 +1,81 @@
 import React, { useState, useEffect } from "react";
 import Course from "./Course";
+import Section from "./Section";
 
 function Path(props) {
-  const [courseList, setCourseList] = useState([]);
-  const [contentInput, setContentInput] = useState("");
+  const [contentList, setContentList] = useState([]);
+  const [contentInput, setContentInput] = useState({});
+  //   const [sectionList, setSectionList] = useState([]);
+
+  //   const currentSection = contentList[contentList.length - 1];
+
+  function addNewSection() {
+    // adds new section obj to array?
+    setContentList([...contentList, { type: "section", name: "New Section" }]);
+  }
 
   function handleChange(e) {
-    setContentInput(e.target.value);
+    setContentInput({ type: "course", name: e.target.value });
   }
 
-  function handleSubmit(e) {
+  function addNewCourse(e) {
     e.preventDefault();
-    setCourseList([...courseList, contentInput]);
-    console.log(courseList);
+    setContentList([...contentList, contentInput]);
+    console.log("content list: ", contentList);
+    console.log("content input: ", contentInput);
 
-    setContentInput("");
+    setContentInput({});
   }
 
-  //   useEffect(() => {
+  //   const renderedSections = contentList.map((item, index) => (
+  //     <Course key={index} item={item} />
+  //   ));
 
-  //   }, []);
+  const renderedSections = contentList.map((item, index) =>
+    item.type === "course" ? (
+      <Course
+        key={index}
+        item={item}
+        contentList={contentList}
+        setContentList={setContentList}
+        index={index}
+      />
+    ) : (
+      <Section
+        key={index}
+        item={item}
+        contentList={contentList}
+        setContentList={setContentList}
+        index={index}
+      />
+    )
+  );
 
-  const renderedList = courseList.map((course, index) => (
-    <Course key={index} course={course} />
-  ));
+  //   const renderedSections = contentList.map((item, index) => {
+  //     if (item.type === "course") {
+  //       <Course key={index} item={item} />;
+  //     } else if (item.type === "section") {
+  //       <Section key={index} item={item} />;
+  //     } else <div></div>;
+  //   });
+
+  //   const renderedContent = sectionList.map((section, index) => (
+  //     <Section key={index} section={section} />
+  //   ));
 
   return (
     <div className="pathContainer">
-      <button>+ Add Section</button>
+      <button onClick={addNewSection}>+ Add Section</button>
 
-      <ul>{renderedList}</ul>
+      <ul>{renderedSections}</ul>
+      {/* <ul>{renderedContent}</ul> */}
 
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => addNewCourse(e)}>
         <input
           onChange={(e) => handleChange(e)}
-          value={contentInput}
+          value={contentInput.name}
           placeholder="Add Content"
-        ></input>
+        />
       </form>
     </div>
   );

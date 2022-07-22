@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.btn {
+  border: none;
+  background: none;
+}
+
 .App,
 .pathContainer {
   display: flex;
@@ -14,4 +19,17 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.courseContainer,
+.sectionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 400px;
+}
+
+.sectionContainer {
+  font-weight: bold;
 }
