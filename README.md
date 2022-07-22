@@ -8,6 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 To use open the project directory and run:
 
 ```
+npm install
 npm start
 ```
 
