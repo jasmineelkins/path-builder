@@ -1,82 +1,105 @@
 import React, { useState, useEffect } from "react";
 import Course from "./Course";
 import Section from "./Section";
+import contentList from "../ContentList";
 
 function Path(props) {
-  const [contentList, setContentList] = useState([]);
+  const [pathContentList, setPathContentList] = useState([]);
   const [contentInput, setContentInput] = useState({});
-  //   const [sectionList, setSectionList] = useState([]);
+  const [selectedContent, setSelectedContent] = useState("");
+  const [selectMode, setSelectMode] = useState(false);
 
-  //   const currentSection = contentList[contentList.length - 1];
+  const renderedOptions = contentList.map((item, index) => (
+    <option key={index} value={item.description}>
+      {item.description}
+    </option>
+  ));
+
+  function handleContentSelection(e) {
+    console.log("selected course: ", e.target.value);
+    setPathContentList([
+      ...pathContentList,
+      { type: "course", description: e.target.value },
+    ]);
+
+    setSelectMode(false);
+  }
 
   function addNewSection() {
-    // adds new section obj to array?
-    setContentList([...contentList, { type: "section", name: "New Section" }]);
+    setPathContentList([
+      ...pathContentList,
+      { type: "section", description: "New Section" },
+    ]);
   }
 
   function handleChange(e) {
-    setContentInput({ type: "course", name: e.target.value });
+    setContentInput({ type: "course", description: e.target.value });
   }
 
   function addNewCourse(e) {
     e.preventDefault();
-    setContentList([...contentList, contentInput]);
-    console.log("content list: ", contentList);
+    setPathContentList([...pathContentList, contentInput]);
+    console.log("path content list: ", pathContentList);
     console.log("content input: ", contentInput);
 
     setContentInput({});
   }
 
-  //   const renderedSections = contentList.map((item, index) => (
-  //     <Course key={index} item={item} />
-  //   ));
-
-  const renderedSections = contentList.map((item, index) =>
+  const renderedContent = pathContentList.map((item, index) =>
     item.type === "course" ? (
       <Course
         key={index}
         item={item}
-        contentList={contentList}
-        setContentList={setContentList}
+        pathContentList={pathContentList}
+        setPathContentList={setPathContentList}
         index={index}
       />
     ) : (
       <Section
         key={index}
         item={item}
-        contentList={contentList}
-        setContentList={setContentList}
+        pathContentList={pathContentList}
+        setPathContentList={setPathContentList}
         index={index}
       />
     )
   );
 
-  //   const renderedSections = contentList.map((item, index) => {
+  //   const renderedContent = contentList.map((item, index) => {
   //     if (item.type === "course") {
-  //       <Course key={index} item={item} />;
+  //       <Course
+  //         key={index}
+  //         item={item}
+  //         pathContentList={pathContentList}
+  //         setPathContentList={setPathContentList}
+  //         index={index}
+  //       />;
   //     } else if (item.type === "section") {
-  //       <Section key={index} item={item} />;
+  //       <Section
+  //         key={index}
+  //         item={item}
+  //         pathContentList={pathContentList}
+  //         setPathContentList={setPathContentList}
+  //         index={index}
+  //       />;
   //     } else <div></div>;
   //   });
-
-  //   const renderedContent = sectionList.map((section, index) => (
-  //     <Section key={index} section={section} />
-  //   ));
 
   return (
     <div className="pathContainer">
       <button onClick={addNewSection}>+ Add Section</button>
 
-      <ul>{renderedSections}</ul>
-      {/* <ul>{renderedContent}</ul> */}
+      <ul>{renderedContent}</ul>
 
-      <form onSubmit={(e) => addNewCourse(e)}>
-        <input
-          onChange={(e) => handleChange(e)}
-          value={contentInput.name}
-          placeholder="Add Content"
-        />
-      </form>
+      {selectMode === false ? (
+        <button onClick={() => setSelectMode(true)}>Add Content</button>
+      ) : (
+        <form>
+          <select onChange={(e) => handleContentSelection(e)}>
+            {renderedOptions}
+          </select>
+        </form>
+      )}
     </div>
   );
 }

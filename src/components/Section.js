@@ -29,8 +29,8 @@ function Section({ item, index, contentList, setContentList }) {
           />
         </form>
       ) : (
-        <span onClick={() => setClicked(!clicked)}>
-          {sectionName ? sectionName : item.name}
+        <span onClick={() => setClicked(true)}>
+          {sectionName ? sectionName : item.description}
         </span>
       )}
 
