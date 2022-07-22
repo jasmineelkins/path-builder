@@ -14,7 +14,6 @@ function Path(props) {
   ));
 
   function handleContentSelection(e) {
-    console.log("selected course: ", e.target.value);
     setPathContentList([
       ...pathContentList,
       { type: "course", description: e.target.value },
@@ -49,26 +48,6 @@ function Path(props) {
       />
     )
   );
-
-  //   const renderedContent = contentList.map((item, index) => {
-  //     if (item.type === "course") {
-  //       <Course
-  //         key={index}
-  //         item={item}
-  //         pathContentList={pathContentList}
-  //         setPathContentList={setPathContentList}
-  //         index={index}
-  //       />;
-  //     } else if (item.type === "section") {
-  //       <Section
-  //         key={index}
-  //         item={item}
-  //         pathContentList={pathContentList}
-  //         setPathContentList={setPathContentList}
-  //         index={index}
-  //       />;
-  //     } else <div></div>;
-  //   });
 
   return (
     <div className="pathContainer">

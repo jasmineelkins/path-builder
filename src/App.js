@@ -1,6 +1,5 @@
 import React from "react";
 import Path from "./components/Path";
-import Course from "./components/Course";
 
 function App() {
   return (
