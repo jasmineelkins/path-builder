@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Course from "./Course";
 import Section from "./Section";
 import contentList from "../ContentList";
+import useBoolean from "../hooks/useBoolean";
 
 function Path(props) {
   const [pathContentList, setPathContentList] = useState([]);
-  const [selectMode, setSelectMode] = useState(false);
+  const [isToggled, { setToggled }] = useBoolean(false);
 
   const renderedOptions = contentList.map((item, index) => (
     <option key={index} value={item.description}>
@@ -19,7 +20,7 @@ function Path(props) {
       { type: "course", description: e.target.value },
     ]);
 
-    setSelectMode(false);
+    setToggled();
   }
 
   function addNewSection() {
@@ -55,8 +56,8 @@ function Path(props) {
 
       <ul>{renderedContent}</ul>
 
-      {selectMode === false ? (
-        <button onClick={() => setSelectMode(true)}>Add Content</button>
+      {isToggled === false ? (
+        <button onClick={setToggled}>Add Content</button>
       ) : (
         <form onChange={(e) => handleContentSelection(e)}>
           <select>{renderedOptions}</select>

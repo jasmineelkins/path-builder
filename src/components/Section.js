@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import useBoolean from "../hooks/useBoolean";
 import { BsTrash } from "react-icons/bs";
 
 function Section({ item, index, pathContentList, setPathContentList }) {
-  const [clicked, setClicked] = useState(false);
+  const [isToggled, { setToggled }] = useBoolean(false);
   const [sectionName, setSectionName] = useState();
 
   function handleChange(e) {
@@ -17,7 +18,7 @@ function Section({ item, index, pathContentList, setPathContentList }) {
       } else return i;
     });
     setPathContentList(updatedList);
-    setClicked(false);
+    setToggled();
   }
 
   function removeItem() {
@@ -27,7 +28,7 @@ function Section({ item, index, pathContentList, setPathContentList }) {
 
   return (
     <div className="sectionContainer">
-      {clicked ? (
+      {isToggled ? (
         <form onSubmit={(e) => updateSectionName(e)}>
           <input
             onChange={(e) => handleChange(e)}
@@ -36,7 +37,7 @@ function Section({ item, index, pathContentList, setPathContentList }) {
           />
         </form>
       ) : (
-        <span onClick={() => setClicked(true)}>
+        <span onClick={setToggled}>
           {sectionName ? sectionName : item.description}
         </span>
       )}
