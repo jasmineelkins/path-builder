@@ -1,4 +1,5 @@
 const contentList = [
+  { type: "default", description: "Select content" },
   { type: "course", description: "Message from the CEO" },
   { type: "course", description: "Company Values" },
   { type: "course", description: "Sexual Harassment Prevention" },

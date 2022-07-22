@@ -10,6 +10,12 @@ body {
 .btn {
   border: none;
   background: none;
+  display: none;
+}
+
+.sectionContainer:hover .btn,
+.courseContainer:hover .btn {
+  display: block;
 }
 
 .App,

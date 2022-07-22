@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { BsTrash } from "react-icons/bs";
 
-function Section({ item, index, contentList, setContentList }) {
+function Section({ item, index, pathContentList, setPathContentList }) {
   const [clicked, setClicked] = useState(false);
   const [sectionName, setSectionName] = useState();
 
@@ -10,12 +11,18 @@ function Section({ item, index, contentList, setContentList }) {
 
   function updateSectionName(e) {
     e.preventDefault();
+    const updatedList = pathContentList.map((i, idx) => {
+      if (idx === index) {
+        return { ...item, description: sectionName };
+      } else return i;
+    });
+    setPathContentList(updatedList);
     setClicked(false);
   }
 
   function removeItem() {
-    const updatedList = contentList.filter((i, idx) => idx !== index);
-    setContentList(updatedList);
+    const updatedList = pathContentList.filter((i, idx) => idx !== index);
+    setPathContentList(updatedList);
   }
 
   return (
@@ -34,8 +41,8 @@ function Section({ item, index, contentList, setContentList }) {
         </span>
       )}
 
-      <button className="btn" onClick={removeItem}>
-        x
+      <button className="btn hidden" onClick={removeItem}>
+        <BsTrash />
       </button>
     </div>
   );

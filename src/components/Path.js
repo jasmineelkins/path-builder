@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Course from "./Course";
 import Section from "./Section";
 import contentList from "../ContentList";
 
 function Path(props) {
   const [pathContentList, setPathContentList] = useState([]);
-  const [contentInput, setContentInput] = useState({});
-  const [selectedContent, setSelectedContent] = useState("");
   const [selectMode, setSelectMode] = useState(false);
 
   const renderedOptions = contentList.map((item, index) => (
@@ -30,19 +28,6 @@ function Path(props) {
       ...pathContentList,
       { type: "section", description: "New Section" },
     ]);
-  }
-
-  function handleChange(e) {
-    setContentInput({ type: "course", description: e.target.value });
-  }
-
-  function addNewCourse(e) {
-    e.preventDefault();
-    setPathContentList([...pathContentList, contentInput]);
-    console.log("path content list: ", pathContentList);
-    console.log("content input: ", contentInput);
-
-    setContentInput({});
   }
 
   const renderedContent = pathContentList.map((item, index) =>
@@ -94,10 +79,8 @@ function Path(props) {
       {selectMode === false ? (
         <button onClick={() => setSelectMode(true)}>Add Content</button>
       ) : (
-        <form>
-          <select onChange={(e) => handleContentSelection(e)}>
-            {renderedOptions}
-          </select>
+        <form onChange={(e) => handleContentSelection(e)}>
+          <select>{renderedOptions}</select>
         </form>
       )}
     </div>
